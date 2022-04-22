@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 //用于编写数据结构中的算法实现
 
@@ -55,11 +57,34 @@ func bubbleSort(data []int) {
 
 	}
 }
+
+//快速排序
+func quickSort(datas []int, low, high int) {
+	if low < high {
+		pivotpos := partition(datas, low, high)
+		quickSort(datas, low, pivotpos-1)
+		quickSort(datas, pivotpos+1, high)
+	}
+}
+func partition(data []int, low, hegh int) int {
+	temp := data[low]
+	for low < hegh {
+		for ; low < hegh && data[hegh] >= temp; hegh-- {
+		}
+		data[low] = data[hegh]
+		for ; low < hegh && data[low] <= temp; low++ {
+		}
+		data[hegh] = data[low]
+	}
+	data[low] = temp
+	return low
+}
 func main() {
-	data := []int{49, 38, 65, 97, 76, 13, 27, 49}
+	data := []int{49, 38, 65, 97, 76, 13, 27, 49, 11, 23, 56, 97, 22, 54, 11, 45}
 
 	//insertsort(data)
 	//insertsort2(data)
-	bubbleSort(data)
+	//bubbleSort(data)
+	quickSort(data, 0, len(data)-1)
 	fmt.Println(data)
 }
