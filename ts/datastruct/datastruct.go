@@ -79,12 +79,29 @@ func partition(data []int, low, hegh int) int {
 	data[low] = temp
 	return low
 }
+
+//简单选择排序
+func selectSort(datas []int) {
+	for i := 0; i < len(datas)-1; i++ {
+		min := i
+		for j := i + 1; j < len(datas); j++ {
+			if datas[j] < datas[min] {
+				min = j
+			}
+		}
+		if min != i {
+			datas[i], datas[min] = datas[min], datas[i]
+		}
+	}
+}
+
 func main() {
 	data := []int{49, 38, 65, 97, 76, 13, 27, 49, 11, 23, 56, 97, 22, 54, 11, 45}
 
 	//insertsort(data)
 	//insertsort2(data)
 	//bubbleSort(data)
-	quickSort(data, 0, len(data)-1)
+	//quickSort(data, 0, len(data)-1)
+	selectSort(data)
 	fmt.Println(data)
 }
