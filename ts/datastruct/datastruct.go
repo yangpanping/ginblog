@@ -43,13 +43,23 @@ func shellsort(data []int) {
 }
 
 //冒泡排序
-func bubbleSort() {
+func bubbleSort(data []int) {
+	for i := 0; i < len(data); i++ {
 
+		for j := len(data) - 1; j > i; j-- {
+			if data[j-1] > data[j] {
+				data[j-1], data[j] = data[j], data[j-1]
+			}
+
+		}
+
+	}
 }
 func main() {
 	data := []int{49, 38, 65, 97, 76, 13, 27, 49}
 
 	//insertsort(data)
-	insertsort2(data)
+	//insertsort2(data)
+	bubbleSort(data)
 	fmt.Println(data)
 }
