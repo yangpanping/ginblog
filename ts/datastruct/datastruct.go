@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 //用于编写数据结构中的算法实现
@@ -119,18 +121,18 @@ func HeapSortMax(arr []int, length int) []int {
 		leftchild := 2*i + 1
 		rightchild := 2*i + 2
 		if leftchild <= length-1 && arr[leftchild] > arr[topmax] { //防止越过界限
-			topmax = leftchild
+			arr[topmax], arr[leftchild] = arr[leftchild], arr[topmax]
 		}
 		if rightchild <= length-1 && arr[rightchild] > arr[topmax] { //防止越过界限
-			topmax = rightchild
+			arr[topmax], arr[rightchild] = arr[rightchild], arr[topmax]
 		}
-		if topmax != i {
-			arr[i], arr[topmax] = arr[topmax], arr[i]
-		}
+		//if topmax != i {
+		//	arr[i], arr[topmax] = arr[topmax], arr[i]
+		//}
 	}
 	return arr
 }
-func HeapSort(arr []int) []int {
+func HeapSort(arr []int) {
 	length := len(arr)
 	for i := 0; i < length; i++ {
 		lastlen := length - i
@@ -139,17 +141,26 @@ func HeapSort(arr []int) []int {
 			arr[0], arr[lastlen-1] = arr[lastlen-1], arr[0]
 		}
 	}
-	return arr
+
 }
 
 func main() {
-	data := []int{49, 38, 65, 97, 76, 13, 27, 49, 11, 23, 56, 97, 22, 54, 11, 45}
+	//data := []int{49, 38, 65, 97, 76, 13, 27, 49, 11, 23, 56, 97, 22, 54, 11, 45}
+	data := make([]int, 1000000)
+	for i := 0; i < 1000000; i++ {
+		data[i] = rand.Intn(1000)
+	}
+	start := time.Now()
+	//产生一千个随机数
 
 	//insertsort(data)
 	//insertsort2(data)
 	//bubbleSort(data)
-	//quickSort(data, 0, len(data)-1)
+	//quickSort(data, 0, len(data)-1)//75.9147ms
 	//selectSort(data)
-	shellsort(data)
+	//shellsort(data)//138.115ms
+	HeapSort(data)
+	a := time.Now().Sub(start)
+	fmt.Println(a)
 	fmt.Println(data)
 }
