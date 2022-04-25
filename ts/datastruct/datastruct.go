@@ -13,6 +13,7 @@ func insertsort(data []int) {
 		temp = data[i]
 		if data[i] < data[i-1] {
 			for j := i - 1; j >= 0 && data[j] > temp; j-- {
+				//向后位移一位
 				data[j+1], data[j] = data[j], data[j+1]
 			}
 		}
@@ -41,7 +42,18 @@ func insertsort2(data []int) {
 
 //希尔排序
 func shellsort(data []int) {
-
+	for dk := len(data) / 2; dk >= 1; dk = dk / 2 {
+		for i := dk; i < len(data); i++ {
+			if data[i] < data[i-dk] {
+				temp := data[i]
+				var j int
+				for j = i - dk; j >= 0 && temp < data[j]; j = j - dk {
+					data[j+dk] = data[j]
+				}
+				data[j+dk] = temp
+			}
+		}
+	}
 }
 
 //冒泡排序
@@ -138,6 +150,6 @@ func main() {
 	//bubbleSort(data)
 	//quickSort(data, 0, len(data)-1)
 	//selectSort(data)
-
-	fmt.Println(HeapSort(data))
+	shellsort(data)
+	fmt.Println(data)
 }
