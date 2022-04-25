@@ -22,13 +22,10 @@ func (u *Userinform) Getuser() string {
 }
 
 //插入数据
-func InsertUser() {
-	for i := 0; i < 50; i++ {
-		userinform := Userinform{Usname: "zpp" + strconv.Itoa(i), Uspswd: "ypp12345", Usroot: 1}
-		re := databases.Db.Select(`Usname`, `Uspswd`, `Usroot`).Create(&userinform)
-		fmt.Println(re.RowsAffected)
-	}
-
+func InsertUser(u Userinform) (code int) {
+	re := databases.Db.Select(`Usname`, `Uspswd`, `Usroot`).Create(&u)
+	code = int(re.RowsAffected)
+	return code
 }
 
 //查询数据
@@ -39,10 +36,11 @@ func QueryUser() {
 }
 
 //查询用户，返回权限值
-func CheckUser(u Userinform) int {
+func CheckUser(u Userinform) Userinform {
 	var user Userinform
-	databases.Db.First(&user, "usname= ? and uspswd = ?", u.Usname, u.Uspswd)
-	return user.Usroot
+	databases.Db.First(&user, "usname= ?", u.Usname)
+	fmt.Println(user)
+	return user
 }
 
 //更新数据
